@@ -1,0 +1,75 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Task 1: Load and Clean the Dataset
+# Load the Iris dataset (replace 'iris.csv' with your dataset file path)
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+df = pd.read_csv(url)
+
+# Display the first few rows of the dataset
+print("First 5 rows of the dataset:")
+print(df.head())
+
+# Explore the structure of the dataset
+print("\nDataset Info:")
+print(df.info())
+
+# Check for missing values
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Clean the dataset (if there are missing values, fill or drop them)
+# In this case, there are no missing values in the Iris dataset.
+
+# Task 2: Basic Data Analysis
+# Compute basic statistics of numerical columns
+print("\nBasic Statistics:")
+print(df.describe())
+
+# Perform groupings on a categorical column and compute the mean of a numerical column
+grouped = df.groupby('species').mean()
+print("\nMean of numerical columns grouped by species:")
+print(grouped)
+
+# Identify patterns or interesting findings
+print("\nInteresting Findings:")
+print("Setosa species has the smallest average petal length and width, while Virginica has the largest.")
+
+# Task 3: Data Visualization
+# 1. Line Chart (Example: Trends over time - not applicable to Iris, so we'll use sepal length trends)
+plt.figure(figsize=(10, 6))
+for species in df['species'].unique():
+    subset = df[df['species'] == species]
+    plt.plot(subset.index, subset['sepal_length'], label=species)
+plt.title("Sepal Length Trends by Species")
+plt.xlabel("Index")
+plt.ylabel("Sepal Length")
+plt.legend()
+plt.show()
+
+# 2. Bar Chart (Average petal length per species)
+plt.figure(figsize=(8, 6))
+sns.barplot(x=grouped.index, y=grouped['petal_length'], palette="viridis")
+plt.title("Average Petal Length by Species")
+plt.xlabel("Species")
+plt.ylabel("Average Petal Length")
+plt.show()
+
+# 3. Histogram (Distribution of sepal length)
+plt.figure(figsize=(8, 6))
+sns.histplot(df['sepal_length'], kde=True, color="blue", bins=15)
+plt.title("Distribution of Sepal Length")
+plt.xlabel("Sepal Length")
+plt.ylabel("Frequency")
+plt.show()
+
+# 4. Scatter Plot (Sepal length vs. Petal length)
+plt.figure(figsize=(8, 6))
+sns.scatterplot(data=df, x='sepal_length', y='petal_length', hue='species', palette="deep")
+plt.title("Sepal Length vs. Petal Length")
+plt.xlabel("Sepal Length")
+plt.ylabel("Petal Length")
+plt.legend(title="Species")
+plt.show()ssss
